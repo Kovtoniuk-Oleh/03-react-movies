@@ -24,7 +24,7 @@ const App = () => {
     try {
       const results = await fetchMovies(query);
       if (results.length === 0) {
-        toast('No movies found for your request.');
+        toast.error('No movies found for your request.');
       }
       setMovies(results);
     } catch {
@@ -47,7 +47,7 @@ const App = () => {
         {!loading && !error && <MovieGrid movies={movies} onSelect={setSelectedMovie} />}
         {selectedMovie && <MovieModal movie={selectedMovie} onClose={handleCloseModal} />}
       </main>
-      <Toaster position="top-right" />
+      <Toaster position="top-center" />
     </>
   );
 };
