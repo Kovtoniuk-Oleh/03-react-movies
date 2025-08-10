@@ -16,11 +16,6 @@ const App = () => {
   const [error, setError] = useState(false);
 
   const handleSearch = async (query: string) => {
-    if (!query.trim()) {
-      toast('Please enter a search term');
-      return;
-    }
-
     setMovies([]);
     setSelectedMovie(null);
     setError(false);
@@ -32,10 +27,8 @@ const App = () => {
         toast('No movies found for your request.');
       }
       setMovies(results);
-    } catch (error) {
+    } catch {
       setError(true);
-      toast.error('There was an error, please try again...');
-      console.error('Fetch movies error:', error);
     } finally {
       setLoading(false);
     }
