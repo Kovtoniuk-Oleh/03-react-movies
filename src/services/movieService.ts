@@ -1,9 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { Movie } from '../types/movie';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 const SEARCH_ENDPOINT = '/search/movie';
-
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 interface FetchMoviesResponse {
@@ -11,14 +10,20 @@ interface FetchMoviesResponse {
 }
 
 export const fetchMovies = async (query: string): Promise<Movie[]> => {
-  const response: AxiosResponse<FetchMoviesResponse> = await axios.get(`${BASE_URL}${SEARCH_ENDPOINT}`, {
-    params: {
-      query,
-    },
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  });
+  try {
+    const response = await axios.get<FetchMoviesResponse>(`${BASE_URL}${SEARCH_ENDPOINT}`, {
+      params: {
+        query,
+        language: 'en-US',
+      },
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    });
 
-  return response.data.results;
+    return response.data.results;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
 };
