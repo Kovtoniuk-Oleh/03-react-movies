@@ -1,7 +1,11 @@
-import styles from './ErrorMessage.module.css';
+import css from './ErrorMessage.module.css';
 
-const ErrorMessage = () => {
-  return <p className={styles.text}>There was an error, please try again...</p>;
+type Props = {
+  message?: string;
+};
+
+const ErrorMessage = ({ message }: Props) => {
+  return <div className={css.error}>{message || 'Something went wrong.'}</div>;
 };
 
 export default ErrorMessage;
